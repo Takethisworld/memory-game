@@ -20,3 +20,8 @@ newGameButton.className = 'new_game-button';
 leaderBoardButton.className = 'leaderboard_button';
 gameBoard.className = 'game_board';
 cardsContainer.className = 'cards_container';
+
+function initializeGame() {
+    // Clear previous cards if any
+    cardsContainer.innerHTML = '';
+}
