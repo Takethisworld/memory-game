@@ -30,9 +30,27 @@ function initializeGame() {
     gameBoard.innerHTML = '';
 }
 
-emojis.forEach((emoji) => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.textContent = emoji;
-    gameBoard.appendChild(card);
-});
+const shuffleEmojis = (arr) => {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+const startNewGame = () => {
+    score = 0;
+    scoreDisplay.textContent = `Score: ${score}`;
+    initializeGame();
+    const cardsitem = [...emojis, ...emojis];
+    const shuffledEmojis = shuffleEmojis(cardsitem);
+
+    shuffledEmojis.forEach((emoji) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.textContent = emoji;
+        gameBoard.appendChild(card);
+    });
+};
+
+startNewGame();
