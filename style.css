@@ -1,0 +1,22 @@
+.game_body {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.game_board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+.card {
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  transition: transform 0.3s ease;
+}

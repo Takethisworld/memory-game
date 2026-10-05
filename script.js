@@ -6,7 +6,6 @@ const leaderBoardButton = document.createElement('button');
 const scoreDisplay = document.createElement('div');
 
 const gameBoard = document.createElement('div');
-const cardsContainer = document.createElement('div');
 
 newGameButton.textContent = 'New Game';
 leaderBoardButton.textContent = 'Leaderboard';
@@ -17,18 +16,23 @@ header.appendChild(leaderBoardButton);
 header.appendChild(scoreDisplay);
 body.appendChild(header);
 body.appendChild(gameBoard);
-gameBoard.appendChild(cardsContainer);
 
 newGameButton.className = 'new_game-button';
 leaderBoardButton.className = 'leaderboard_button';
 gameBoard.className = 'game_board';
-cardsContainer.className = 'cards_container';
+body.className = 'game_body';
 
 let score = 0;
-const cards = [];
+const emojis = ['🍎', '🍌', '🍇', '🍒', '🍉', '🍍'];
 
 function initializeGame() {
     // Clear previous cards if any
-    cardsContainer.innerHTML = '';
+    gameBoard.innerHTML = '';
 }
 
+emojis.forEach((emoji) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.textContent = emoji;
+    gameBoard.appendChild(card);
+});
