@@ -1,4 +1,5 @@
-const body = document.querySelector('body');
+const container = document.createElement('div');
+const body = document.body;
 
 const header = document.createElement('header');
 const newGameButton = document.createElement('button');
@@ -6,6 +7,9 @@ const leaderBoardButton = document.createElement('button');
 const scoreDisplay = document.createElement('div');
 
 const gameBoard = document.createElement('div');
+const gameActive = false;
+const firstCard = null;
+const lockBoard = false;
 
 newGameButton.textContent = 'New Game';
 leaderBoardButton.textContent = 'Leaderboard';
@@ -20,7 +24,15 @@ body.appendChild(gameBoard);
 newGameButton.className = 'new_game-button';
 leaderBoardButton.className = 'leaderboard_button';
 gameBoard.className = 'game_board';
-body.className = 'game_body';
+container.className = 'game_body';
+
+const startScreen = document.createElement('div');
+startScreen.className = 'start_screen';
+startScreen.textContent = 'Welcome to the Emoji Memory Game! Click "New Game" to start.';
+container.appendChild(header);
+container.appendChild(gameBoard);
+container.appendChild(startScreen);
+body.appendChild(container);
 
 let score = 0;
 const emojis = ['🍎', '🍌', '🍇', '🍒', '🍉', '🍍'];
@@ -38,19 +50,43 @@ const shuffleEmojis = (arr) => {
     return arr;
 }
 
+
 const startNewGame = () => {
     score = 0;
     scoreDisplay.textContent = `Score: ${score}`;
-    initializeGame();
     const cardsitem = [...emojis, ...emojis];
     const shuffledEmojis = shuffleEmojis(cardsitem);
+    initializeGame();
 
     shuffledEmojis.forEach((emoji) => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.textContent = emoji;
+        card.dataset.emoji = emoji;
+        card.textContent = '';
+        card.addEventListener('click', () => cardsToggle(card));
         gameBoard.appendChild(card);
+        startScreen.remove();
     });
 };
 
-startNewGame();
+
+
+const cardsToggle = (card) => {
+    if (lockBoard || card.classList.contains('matched') || card.classList.contains('flipped')) return;
+
+    card.classList.add('flipped');
+    card.textContent = card.dataset.emoji;
+
+    if (card === selectedCard) {
+        console.log('Same card clicked');
+    } else if (selectedCard && selectedCard.dataset.emoji === card.dataset.emoji) {
+        card.classList.add('matched');
+        selectedCard.classList.add('matched');
+        score += 10;
+        scoreDisplay.textContent = `Score: ${score}`;
+    }
+}
+
+
+
+newGameButton.addEventListener('click', () => startNewGame());
