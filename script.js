@@ -7,9 +7,9 @@ const leaderBoardButton = document.createElement('button');
 const scoreDisplay = document.createElement('div');
 
 const gameBoard = document.createElement('div');
-const gameActive = false;
-const firstCard = null;
-const lockBoard = false;
+let gameActive = false;
+let firstCard = null;
+let lockBoard = false;
 
 newGameButton.textContent = 'New Game';
 leaderBoardButton.textContent = 'Leaderboard';
@@ -72,20 +72,41 @@ const startNewGame = () => {
 
 
 const cardsToggle = (card) => {
-    if (lockBoard || card.classList.contains('matched') || card.classList.contains('flipped')) return;
+    if (lockBoard || card.classList.contains('matched') || card.classList.contains('unmatched')) return;
 
     card.classList.add('flipped');
     card.textContent = card.dataset.emoji;
 
-    if (card === selectedCard) {
-        console.log('Same card clicked');
-    } else if (selectedCard && selectedCard.dataset.emoji === card.dataset.emoji) {
-        card.classList.add('matched');
-        selectedCard.classList.add('matched');
-        score += 10;
+    if (!firstCard) {
+        firstCard = card;
+        return;
+    }
+
+    const secondCard = card;
+
+    if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        score++;
         scoreDisplay.textContent = `Score: ${score}`;
+        resetTurn();
+    } else {
+        lockBoard = true;
+        setTimeout(() => {
+            firstCard.classList.remove('flipped');
+            secondCard.classList.remove('flipped');
+            firstCard.textContent = '';
+            secondCard.textContent = '';
+            resetTurn();
+        }, 1000);
+    }
+    function resetTurn() {
+        firstCard = null;
+        lockBoard = false;
     }
 }
+
+
 
 
 
