@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.game_body {
+       max-width: 600px;
+      width: 100%;
+      border-radius: 30px;
+      padding: 40px 30px;
+      text-align: center;
+}
+
+.game_board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+.card {
+   width: 100%;
+      aspect-ratio: 1 / 1;
+      background-color: #2d2d2d;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 16px;
+      font-size: 2rem;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.card.flipped {
+  background-color:  #2196F3;
+  transform: rotateY(180deg);
+}
+
+.card.matched {
+  background-color: #4CAF50;
+  cursor: default;
+}
+.card.unmatched {
+  background-color: #f44336;
+  cursor: default;
+}
+
